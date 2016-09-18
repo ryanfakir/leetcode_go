@@ -42,3 +42,4 @@ docs
 lib
 test
 tmp
+go/pkg/

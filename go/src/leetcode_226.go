@@ -1,8 +1,9 @@
 package src
+
 type TreeNode struct {
-    Val int
-    Left *TreeNode
-    Right *TreeNode
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
 }
 
 func invertTree(root *TreeNode) *TreeNode {
@@ -11,7 +12,7 @@ func invertTree(root *TreeNode) *TreeNode {
 	}
 	queue := make([]*TreeNode, 0)
 	queue = append(queue, root)
-	for ;len(queue) != 0; {
+	for len(queue) != 0 {
 		// offer
 		node := queue[0]
 		queue = queue[1:]
