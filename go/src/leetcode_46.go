@@ -1,12 +1,26 @@
 package src
 
-func numTrees(n int) int {
-    res := make([]int, n+1)
-    res[0], res[1] = 1, 1
-    for i := 2; i<=n; i++ {
-        for j:= 0; j<i; j++ {
-            res[i] += res[j]*res[i-j-1]
-        }
-    }
-    return res[n]
+func permute(nums []int) [][]int {
+	return dfs(nums, 0, nil, nil)
+}
+
+func dfs(nums []int, visited int, res [][]int, temp []int) [][]int {
+	if len(temp) == len(nums) {
+		dict := make([]int, len(temp))
+		copy(dict, temp)
+		res = append(res, dict)
+		return res
+	}
+	for i := 0; i < len(nums); i++ {
+		if visited&(1<<uint(i)) == 0 {
+			// fmt.Println(visited)
+			original := visited
+			visited = visited | (1 << uint(i))
+			temp = append(temp, nums[i])
+			res = dfs(nums, visited, res, temp)
+			visited = original
+			temp = temp[:len(temp)-1]
+		}
+	}
+	return res
 }
