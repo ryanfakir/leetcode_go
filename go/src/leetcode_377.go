@@ -12,7 +12,7 @@ func helper(nums []int, target int, val int, m map[int]int) int {
 		return 0
 	}
 	if val, ok := m[val]; ok {
-		return m[val]
+		return val
 	}
 	var cnt int
 	for i := 0; i < len(nums); i++ {
