@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 func ladderLength(beginWord string, endWord string, wordList []string) int {
 	var q []string
 	m := make(map[string]int)
@@ -19,7 +17,6 @@ func ladderLength(beginWord string, endWord string, wordList []string) int {
 	visited := make(map[string]bool)
 	for len(q) > 0 {
 		pop := q[0]
-		fmt.Println(q)
 		q = q[1:]
 		if _, ok := visited[pop]; ok {
 			continue
@@ -36,9 +33,7 @@ func ladderLength(beginWord string, endWord string, wordList []string) int {
 				for _, v := range wordList {
 					if v == string(temp) && !visited[v] {
 						q = append(q, v)
-
 						m[v] = m[pop] + 1
-						fmt.Println(m)
 					}
 				}
 			}
