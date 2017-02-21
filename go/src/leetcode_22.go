@@ -44,3 +44,24 @@ func helper(res []string, left int, right int, temp bytes.Buffer) []string {
 	}
 	return res
 }
+
+func generateParenthesis(n int) []string {
+	return helper(nil, n, n, "")
+}
+
+func helper(res []string, left, right int, temp string) []string {
+	if left > right {
+		return res
+	}
+	if left == 0 && right == 0 {
+		res = append(res, temp)
+		return res
+	}
+	if left > 0 {
+		res = helper(res, left-1, right, temp+"(")
+	}
+	if right > 0 {
+		res = helper(res, left, right-1, temp+")")
+	}
+	return res
+}
