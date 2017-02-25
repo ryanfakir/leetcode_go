@@ -14,8 +14,8 @@ func isPalindrome(s string) bool {
 		if strings.ToLower(string(s[i])) != strings.ToLower(string(s[j])) {
 			return false
 		}
-		i++
 		j--
+		i++
 	}
 	return true
 }
