@@ -1,34 +1,46 @@
 package main
 
+import "strconv"
+
 func readBinaryWatch(num int) []string {
 	hours := []int{1, 2, 4, 8}
 	mins := []int{1, 2, 4, 8, 16, 32}
-	var hoursArr, minsArr [][]int
-	for i := 1; i < nums; i++ {
-		hoursArr = append(hoursArr, generate(i)...)
-		minsArr = append(minsArr, generate(nums-i)...)
+	var res []string
+	for i := 0; i <= num; i++ {
+		hourArr := generate(i, hours)
+		minArr := generate(num-i, mins)
+		for _, v := range hourArr {
+			if v >= 12 {
+				continue
+			}
+			for _, el := range minArr {
+				if el >= 60 {
+					continue
+				}
+				var s = "" + strconv.Itoa(v) + ":"
+				if el > 9 {
+					s += strconv.Itoa(el)
+				} else {
+					s += "0" + strconv.Itoa(el)
+				}
+				res = append(res, s)
+			}
+		}
 	}
-	for _, v := range hoursArr {
-
-	}
-
+	return res
 }
 
-func generate(nums int, len int) [][]int {
-	return helper(nil, nil, nums, 0, len)
+func generate(nums int, pool []int) []int {
+	return helper(nil, 0, nums, 0, pool)
 }
 
-func helper(res [][]int, temp []int, nums int, level int, len int) [][]int {
-	if len(temp) == nums {
-		newtemp := make([]int, len(temp))
-		copy(newtemp, temp)
-		res = append(res, newtemp)
+func helper(res []int, total, size, level int, pool []int) []int {
+	if size == 0 {
+		res = append(res, total)
 		return res
 	}
-	for i := level; i < len; i++ {
-		temp = append(temp, level)
-		res = helper(res, temp, nums, i+1, len)
-		temp = temp[:len(temp)-1]
+	for i := level; i < len(pool); i++ {
+		res = helper(res, total+pool[i], size-1, i+1, pool)
 	}
 	return res
 }
