@@ -27,4 +27,5 @@ func largestRectangleArea(heights []int) int {
 		}
 	}
 	return res
+
 }
