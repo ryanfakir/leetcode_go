@@ -1,6 +1,9 @@
 package main
 
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
 func largestRectangleArea(heights []int) int {
 	if heights == nil {
@@ -26,6 +29,7 @@ func largestRectangleArea(heights []int) int {
 			res = int(math.Max(float64(res), float64((j-i+1)*dp[i][j])))
 		}
 	}
+	fmt.Println(heights)
 	return res
 
 }
