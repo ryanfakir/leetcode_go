@@ -2,18 +2,17 @@ package main
 
 import (
 	"container/heap"
-	"fmt"
 	"strconv"
 )
 
 func findRelativeRanks(nums []int) []string {
 	length := len(nums)
 	pq := make(PriorityQueue, length)
-	heap.Init(&pq)
+
 	for i, v := range nums {
-		heap.Push(&pq, &Item{i, v})
+		pq[i] = &Item{i, v}
 	}
-	fmt.Println("temp")
+	heap.Init(&pq)
 	res := make([]string, length)
 	cnt := 1
 	for i := 0; i < length; i++ {
