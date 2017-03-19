@@ -1,9 +1,6 @@
 package main
 
-import (
-	"fmt"
-	"math"
-)
+import "math"
 
 func calculateMinimumHP(dungeon [][]int) int {
 	if dungeon == nil || len(dungeon) == 0 || len(dungeon[0]) == 0 {
@@ -14,35 +11,17 @@ func calculateMinimumHP(dungeon [][]int) int {
 	for i, _ := range dp {
 		dp[i] = make([]int, col)
 	}
-
-	if dungeon[0][0] < 0 {
-		dp[0][0] = 1 - dungeon[0][0]
-	} else {
-		dp[0][0] = 1
+	dp[row-1][col-1] = int(math.Max(float64(1), float64(1-dungeon[row-1][col-1])))
+	for i := row - 2; i >= 0; i-- {
+		dp[i][col-1] = int(math.Max(float64(1), float64(0-dungeon[i][col-1]+dp[i+1][col-1])))
 	}
-	for i := 1; i < row; i++ {
-		if dungeon[i][0] > 0 {
-			dp[i][0] = dp[i-1][0]
-		} else {
-			dp[i][0] = dp[i-1][0] - dungeon[i][0]
+	for i := col - 2; i >= 0; i-- {
+		dp[row-1][i] = int(math.Max(float64(1), float64(0-dungeon[row-1][i]+dp[row-1][i+1])))
+	}
+	for i := row - 2; i >= 0; i-- {
+		for j := col - 2; j >= 0; j-- {
+			dp[i][j] = int(math.Max(float64(1), float64(0-dungeon[i][j]+int(math.Min(float64(dp[i][j+1]), float64(dp[i+1][j]))))))
 		}
 	}
-	for i := 1; i < col; i++ {
-		if dungeon[0][i] > 0 {
-			dp[0][i] = dp[0][i-1]
-		} else {
-			dp[0][i] = dp[0][i-1] - dungeon[0][i]
-		}
-	}
-	for i := 1; i < row; i++ {
-		for j := 1; j < col; j++ {
-			if dungeon[i][j] > 0 {
-				dp[i][j] = int(math.Min(float64(dp[i-1][j]), float64(dp[i][j-1])))
-			} else {
-				dp[i][j] = int(math.Min(float64(dp[i-1][j]), float64(dp[i][j-1]))) - dungeon[i][j]
-			}
-		}
-	}
-	fmt.Println(dp)
-	return dp[row-1][col-1]
+	return dp[0][0]
 }
