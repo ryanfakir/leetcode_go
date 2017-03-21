@@ -34,3 +34,40 @@ func valid(s string) bool {
 	}
 	return true
 }
+
+func partition(s string) [][]string {
+	return helper(0, s, nil, nil)
+}
+
+func helper(level int, s string, temp []string, res [][]string) [][]string {
+	if level == len(s) {
+		el := make([]string, len(temp))
+		copy(el, temp)
+		res = append(res, temp)
+		return res
+	}
+	org := temp
+	for i := level + 1; i <= len(s); i++ {
+		if valid(s[level:i]) {
+			//fmt.Println(level)
+			//fmt.Println(s[level: i])
+			org = temp
+			temp = append(temp, s[level:i])
+			res = helper(i, s, temp, res)
+			temp = org
+		}
+	}
+	return res
+}
+
+func valid(s string) bool {
+	if len(s) == 1 {
+		return true
+	}
+	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
+		if s[i] != s[j] {
+			return false
+		}
+	}
+	return true
+}
