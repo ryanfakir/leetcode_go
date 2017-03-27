@@ -29,3 +29,32 @@ func helper(visited int, temp []int, res [][]int, nums []int) [][]int {
 	}
 	return res
 }
+
+func permuteUnique(nums []int) [][]int {
+	sort.Ints(nums)
+	return helper(nums, nil, nil, 0)
+}
+
+func helper(nums []int, temp []int, res [][]int, visited int) [][]int {
+	if len(temp) == len(nums) {
+		el := make([]int, len(temp))
+		copy(el, temp)
+		res = append(res, el)
+		return res
+	}
+	for i := 0; i < len(nums); i++ {
+		if 1<<uint(i)&visited == 0 {
+			if i > 0 && nums[i] == nums[i-1] && visited&(1<<uint(i-1)) == 0 {
+				continue
+			}
+			org := visited
+			visited = visited | 1<<uint(i)
+			temp = append(temp, nums[i])
+			res = helper(nums, temp, res, visited)
+			temp = temp[:len(temp)-1]
+			visited = org
+		}
+
+	}
+	return res
+}
