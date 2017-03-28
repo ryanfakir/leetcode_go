@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 func wordBreak(s string, wordDict []string) []string {
 	dp := make([]bool, len(s))
 	for i, _ := range dp {
@@ -11,10 +9,7 @@ func wordBreak(s string, wordDict []string) []string {
 	for _, v := range wordDict {
 		dict[v] = true
 	}
-	fmt.Println(dict)
-	res := helper(nil, dp, dict, s, 0, "")
-	fmt.Println(dp)
-	return res
+	return helper(nil, dp, dict, s, 0, "")
 }
 
 func helper(res []string, dp []bool, wordDict map[string]bool, s string, level int, temp string) []string {
@@ -36,7 +31,7 @@ func helper(res []string, dp []bool, wordDict map[string]bool, s string, level i
 			}
 			res = helper(res, dp, wordDict, s, i, temp)
 			if len(res) == size {
-				dp[i-1] = false
+				dp[i] = false
 			}
 			temp = org
 		}
