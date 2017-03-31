@@ -33,6 +33,7 @@ func helper(board [][]byte, visited [][]bool, word string, x, y, index int) bool
 			return true
 		}
 	}
+	// reset visited
 	visited[x][y] = false
 	return false
 }
