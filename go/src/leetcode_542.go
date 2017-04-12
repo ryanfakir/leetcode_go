@@ -65,3 +65,36 @@ func valid(i, j, row, col int) bool {
 	}
 	return true
 }
+func updateMatrix(matrix [][]int) [][]int {
+	row, col := len(matrix), len(matrix[0])
+	var q [][]int
+
+	for i := 0; i < row; i++ {
+		for j := 0; j < col; j++ {
+			if matrix[i][j] == 0 {
+				q = append(q, []int{i, j})
+			} else {
+				matrix[i][j] = 1<<7 - 1
+			}
+		}
+	}
+	dir := [][]int{{0, 1}, {0, -1}, {1, 0}, {-1, 0}}
+	for len(q) > 0 {
+		pop := q[0]
+		q = q[1:]
+		for _, v := range dir {
+			if valid(pop[0]+v[0], pop[1]+v[1], row, col) && matrix[pop[0]+v[0]][pop[1]+v[1]] > matrix[pop[0]][pop[1]] {
+				matrix[pop[0]+v[0]][pop[1]+v[1]] = matrix[pop[0]][pop[1]] + 1
+				q = append(q, []int{pop[0] + v[0], pop[1] + v[1]})
+			}
+		}
+	}
+	return matrix
+}
+
+func valid(i, j, row, col int) bool {
+	if i < 0 || j < 0 || i >= row || j >= col {
+		return false
+	}
+	return true
+}
