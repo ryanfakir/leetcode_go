@@ -25,6 +25,7 @@ func merge(l1, l2 *ListNode) *ListNode {
 	if l2 == nil {
 		return l1
 	}
+	
 	if l2.Val < l1.Val {
 		l2.Next = merge(l1, l2.Next)
 		return l2
