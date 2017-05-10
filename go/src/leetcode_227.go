@@ -39,3 +39,39 @@ func calculate(s string) int {
 	}
 	return res
 }
+func calculate(s string) int {
+	var stack []int
+	var val int
+	var op = '+'
+	for i, v := range s {
+		if v >= '0' && v <= '9' {
+			digit, _ := strconv.Atoi(string(v))
+			val = val*10 + digit
+		}
+		if v == '*' || v == '+' || v == '-' || v == '/' || i == len(s)-1 {
+			if op == '+' {
+				stack = append(stack, val)
+			}
+			if op == '-' {
+				stack = append(stack, -val)
+			}
+			if op == '*' {
+				temp := stack[len(stack)-1]
+				stack = stack[:len(stack)-1]
+				stack = append(stack, temp*val)
+			}
+			if op == '/' {
+				temp := stack[len(stack)-1]
+				stack = stack[:len(stack)-1]
+				stack = append(stack, temp/val)
+			}
+			op = v
+			val = 0
+		}
+	}
+	var res int
+	for _, v := range stack {
+		res += v
+	}
+	return res
+}
