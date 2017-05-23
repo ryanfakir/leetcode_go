@@ -66,3 +66,32 @@ func helper(i int, j int, row int, col int, arr [][]byte) {
 	helper(i, j-1, row, col, arr)
 	helper(i, j+1, row, col, arr)
 }
+
+func numIslands(grid [][]byte) int {
+	if len(grid) == 0 || len(grid[0]) == 0 {
+		return 0
+	}
+	row, col := len(grid), len(grid[0])
+	var res int
+	for i := 0; i < row; i++ {
+		for j := 0; j < col; j++ {
+			if grid[i][j] == '1' {
+				helper(grid, i, j)
+				res++
+			}
+		}
+	}
+	return res
+}
+
+func helper(grid [][]byte, x, y int) {
+	var dir = [][]int{[]int{1, 0}, []int{-1, 0}, []int{0, 1}, []int{0, -1}}
+	grid[x][y] = '0'
+	for _, v := range dir {
+		a, b := x+v[0], y+v[1]
+		if a < 0 || b < 0 || a >= len(grid) || b >= len(grid[0]) || grid[a][b] == '0' {
+			continue
+		}
+		helper(grid, a, b)
+	}
+}
