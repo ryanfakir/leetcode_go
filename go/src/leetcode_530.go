@@ -2,20 +2,23 @@ package main
 
 import "math"
 
-var res int
+var res int = 1<<7 - 1
+var pre int = -1
 
 func getMinimumDifference(root *TreeNode) int {
-	helper(root, -1<<8)
+	res = 1<<7 - 1
+	helper(root)
 	return res
 }
 
-func helper(root *TreeNode, pre int) {
+func helper(root *TreeNode) {
 	if root == nil {
 		return
 	}
 	helper(root.Left)
-	res = int(math.Min(float64(res), float64(root.Val-left)))
+	if pre != -1 {
+		res = int(math.Min(float64(res), float64(root.Val-pre)))
+	}
+	pre = root.Val
 	helper(root.Right)
-	res = int(math.Min(float64(res), float64(right-root.Val)))
-
 }
