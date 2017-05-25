@@ -73,3 +73,32 @@ func (p *IntElement) Pop() interface{} {
 	*p = temp[:len(temp)-1]
 	return el
 }
+
+func findKthLargest(nums []int, k int) int {
+    var pq ElementArr
+    heap.Init(&pq)
+    for _, v := range nums {
+        heap.Push(&pq, v)
+    }
+    for  k > 1 {
+        heap.Pop(&pq)
+        k--
+    }
+    return heap.Pop(&pq).(int)
+}
+
+type ElementArr []int
+
+func (e ElementArr) Len() int {return len(e)}
+func (e ElementArr) Swap(i, j int) {e[i], e[j] = e[j], e[i]}
+func (e ElementArr) Less(i, j int) bool {return e[i] > e[j]}
+func (e *ElementArr) Push(input interface{}) {
+    *e = append(*e, input.(int))
+}
+
+func (e *ElementArr) Pop() interface{} {
+    temp := *e
+    res := temp[len(temp) -1]
+    *e = temp[:len(temp)-1]
+    return res
+}
