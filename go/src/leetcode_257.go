@@ -69,3 +69,20 @@ func helper(res []string, temp string, root *TreeNode) []string {
 	}
 	return res
 }
+func binaryTreePaths(root *TreeNode) []string {
+	return helper(nil, "", root)
+}
+
+func helper(res []string, temp string, root *TreeNode) []string {
+	if root == nil {
+		return res
+	}
+	if root.Left == nil && root.Right == nil {
+		temp += strconv.Itoa(root.Val)
+		res = append(res, temp)
+		return res
+	}
+	res = helper(res, temp+strconv.Itoa(root.Val)+"->", root.Left)
+	res = helper(res, temp+strconv.Itoa(root.Val)+"->", root.Right)
+	return res
+}
