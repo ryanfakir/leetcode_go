@@ -41,3 +41,42 @@ func ladderLength(beginWord string, endWord string, wordList []string) int {
 	}
 	return 0
 }
+func ladderLength(beginWord string, endWord string, wordList []string) int {
+	dict := make(map[string]bool)
+	for _, v := range wordList {
+		dict[v] = true
+	}
+	var q []string
+	q = append(q, beginWord)
+	visited := make(map[string]bool)
+	level := make(map[string]bool)
+	step := 1
+	for len(q) > 0 {
+		l := len(q)
+		step++
+		for i := 0; i < l; i++ {
+			pop := q[0]
+			q = q[1:]
+			if visited[pop] {
+				continue
+			}
+			visited[pop] = true
+			for j := 0; j < len(pop); j++ {
+				for k := 'a'; k <= 'z'; k++ {
+					temp := pop[0:j] + string(k) + pop[j+1:]
+					if visited[temp] {
+						continue
+					}
+					if dict[temp] && !level[temp] {
+						q = append(q, temp)
+						level[temp] = true
+						if temp == endWord {
+							return step
+						}
+					}
+				}
+			}
+		}
+	}
+	return 0
+}

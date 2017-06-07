@@ -58,3 +58,31 @@ func helper(nums []int, temp []int, res [][]int, visited int) [][]int {
 	}
 	return res
 }
+
+func permuteUnique(nums []int) [][]int {
+    sort.Ints(nums)
+    return helper(nil, nil, nums, make(map[int]bool))
+}
+
+func helper(res [][]int, temp, nums []int, visited map[int]bool) [][]int {
+    if len(nums) == len(temp) {
+        t := make([]int, len(temp))
+        copy(t, temp)
+        res = append(res, t)
+        return res
+    }
+    level := make(map[int]bool)
+    for i:= 0; i < len(nums); i++ {
+        
+        //if i > 0 && nums[i] == nums[i-1] { continue}
+        if !visited[i] && !level[nums[i]] {
+            visited[i] = true
+            level[nums[i]] = true
+            temp = append(temp, nums[i])
+            res = helper(res, temp, nums, visited)
+            visited[i] = false
+            temp = temp[:len(temp)-1]
+        }
+    }
+    return res
+}
