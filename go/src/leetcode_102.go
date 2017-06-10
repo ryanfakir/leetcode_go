@@ -49,3 +49,29 @@ func helper(root *TreeNode, level int, res [][]int) [][]int {
 	}
 	return res
 }
+
+func levelOrder(root *TreeNode) [][]int {
+	if root == nil {
+		return [][]int{}
+	}
+	var res [][]int
+	var stack []*TreeNode
+	stack = append(stack, root)
+	for len(stack) > 0 {
+		size := len(stack)
+		var temp []int
+		for i := 0; i < size; i++ {
+			pop := stack[0]
+			stack = stack[1:]
+			temp = append(temp, pop.Val)
+			if pop.Left != nil {
+				stack = append(stack, pop.Left)
+			}
+			if pop.Right != nil {
+				stack = append(stack, pop.Right)
+			}
+		}
+		res = append(res, temp)
+	}
+	return res
+}
