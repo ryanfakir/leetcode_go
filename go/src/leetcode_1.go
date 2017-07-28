@@ -8,7 +8,7 @@ func twoSum(nums []int, target int) []int {
 			res = append(res, []int{k, val}...)
 			return res
 		}
-		m[v] = k++
+		m[v] = k
 	}
 	return res
 }
