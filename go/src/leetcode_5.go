@@ -26,7 +26,6 @@ func helper(left int, right int, s string) (res string) {
 			right++
 			continue
 		}
-		break
 	}
 	return
 }
