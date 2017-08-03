@@ -9,6 +9,7 @@ func twoSum(nums []int, target int) []int {
 			return res
 		}
 		m[v] = k
+		
 	}
 	return res
 }
