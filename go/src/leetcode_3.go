@@ -16,6 +16,6 @@ func lengthOfLongestSubstring(s string) int {
 		}
 		m[s[j]]++
 		res = int(math.Max(float64(res), float64(j-i+1)))
-	}
+	} 
 	return res
 }
