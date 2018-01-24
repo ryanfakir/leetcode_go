@@ -74,3 +74,29 @@ func addBinary(a string, b string) string {
 	}
 	return string(arr)
 }
+func addBinary(a string, b string) string {
+	if len(a) > len(b) {
+		temp := a
+		a = b
+		b = temp
+	}
+	var res string
+	diff := len(b) - len(a)
+	over := 0
+	for i := len(a) - 1; i >= -diff; i-- {
+		bVal := int(b[i+diff] - '0')
+		aVal := 0
+		if i < 0 {
+			aVal = 0
+		} else {
+			aVal = int(a[i] - '0')
+		}
+		sum := aVal + bVal + over
+		over = sum / 2
+		res = strconv.Itoa(sum%2) + res
+	}
+	if over > 0 {
+		res = "1" + res
+	}
+	return res
+}
