@@ -16,6 +16,30 @@ func lengthOfLongestSubstring(s string) int {
 		}
 		m[s[j]]++
 		res = int(math.Max(float64(res), float64(j-i+1)))
-	} 
+	}
+	return res
+}
+
+func lengthOfLongestSubstring(s string) int {
+	if len(s) == 0 {
+		return 0
+	}
+	var res int
+	dict := make(map[byte]bool)
+	var left, right int
+	for right < len(s) {
+		if !dict[s[right]] {
+			dict[s[right]] = true
+			res = int(math.Max(float64(res), float64(right-left+1)))
+			right++
+			continue
+		}
+		for s[left] != s[right] {
+			dict[s[left]] = false
+			left++
+		}
+		left++
+		right++
+	}
 	return res
 }
