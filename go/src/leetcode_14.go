@@ -22,6 +22,7 @@ func longestCommonPrefix(strs []string) string {
 			res = el
 		}
 	}
+	
 	return res
 }
 
