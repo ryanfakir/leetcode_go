@@ -46,3 +46,19 @@ func letterCombinations(digits string) []string {
 	}
 	return res
 }
+func letterCombinations(digits string) []string {
+    if len(digits) ==0 {return []string{}}
+    dict := []string{"", "", "abc", "def", "ghi", "jkl", "mno","pqrs", "tuv", "wxyz"}
+    res := []string{""}
+    for _, v := range digits {
+        tmp := dict[v-'0']
+        var newRes []string
+        for _, t := range tmp {
+            for _, r := range res {
+                newRes = append(newRes, r + string(t))
+            }
+        }
+        res = newRes
+    }
+    return res
+}
