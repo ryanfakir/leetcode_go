@@ -34,3 +34,53 @@ func merge(l1, l2 *ListNode) *ListNode {
 		return l1
 	}
 }
+
+func mergeKLists(lists []*ListNode) *ListNode {
+    if len(lists) == 0 {return nil}
+    if len(lists) == 1 {return lists[0]}
+    
+    
+    for len(lists) != 1 {
+        
+        var newList []*ListNode
+        for len(lists) >= 2 {
+            tmp := merge(lists[0], lists[1])
+            newList = append(newList, tmp)
+            lists =lists[2:]
+        }
+        if len(lists) == 1 {
+            newList = append(newList, lists[0])
+        }
+        lists = newList
+    }
+    return lists[0]
+}
+
+
+func merge(l1, l2 *ListNode) *ListNode {
+    var tmp *ListNode = &ListNode{}
+    var res = tmp
+    for l1 != nil && l2 != nil {
+        if l1.Val >= l2.Val {
+            res.Next = &ListNode{l2.Val, nil}
+            l2 = l2.Next
+        } else {
+            res.Next = &ListNode{l1.Val, nil}
+            l1 = l1.Next
+        }
+        res = res.Next
+    }
+    for l1 != nil {
+        res.Next =  &ListNode{l1.Val, nil}
+        res = res.Next
+        l1 = l1.Next
+    }
+    for l2 != nil {
+        res.Next =  &ListNode{l2.Val, nil}
+        res = res.Next
+        l2 = l2.Next
+    }
+    fmt.Println(tmp.Next)
+    return tmp.Next
+    
+}

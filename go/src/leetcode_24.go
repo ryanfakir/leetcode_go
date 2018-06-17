@@ -15,3 +15,18 @@ func swapPairs(head *ListNode) *ListNode {
 	return placeHolder.Next
 
 }
+
+func swapPairs(head *ListNode) *ListNode {
+    dummy := &ListNode{0, head}
+    prev := dummy
+    first:= head
+    for first != nil && first.Next != nil {
+        sec := first.Next
+        first.Next = sec.Next
+        sec.Next = first
+        prev.Next = sec
+        prev = first
+        first = first.Next
+    }
+    return dummy.Next
+}
