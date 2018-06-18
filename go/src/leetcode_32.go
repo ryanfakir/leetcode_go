@@ -24,3 +24,22 @@ func longestValidParentheses(s string) int {
 	}
 	return res
 }
+
+
+func longestValidParentheses(s string) int {
+    q := []int{-1}
+	var res int
+	for i, v := range s {
+		if v == '(' {
+			q = append(q, i)
+		} else {
+            q = q[:len(q)-1]
+            if len(q) == 0 {
+                q = append(q, i)
+            } else {
+                res = int(math.Max(float64(i-q[len(q)-1]), float64(res)))
+            }
+		}
+	}
+	return res
+}
