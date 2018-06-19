@@ -71,3 +71,37 @@ func isValidSudoku(board [][]byte) bool {
 	}
 	return true
 }
+
+func isValidSudoku(board [][]byte) bool {
+    if len(board) == 0 || len(board[0]) == 0 {
+        return false
+    }
+    for i := 0 ; i < len(board); i++ {
+        h, v, c := make(map[byte]bool), make(map[byte]bool), make(map[byte]bool)
+        for j:= 0; j < len(board[0]); j++ {
+            if board[i][j] != byte('.') {
+                if !h[board[i][j]] {
+                    h[board[i][j]] = true
+                } else {
+                    return false
+                }
+            }
+            if (board[j][i]) != byte('.') {
+                if !v[board[j][i]] {
+                    v[board[j][i]] = true
+                } else {
+                    return false
+                }
+            }
+            if (board[i/3 * 3 + j/3][i%3 * 3 + j%3]) != byte('.') {
+                if !c[board[i/3 * 3 + j/3][i%3 * 3 + j%3]] {
+                    c[board[i/3 * 3 + j/3][i%3 * 3 + j%3]] = true
+                } else {
+                    return false
+                }
+            }
+            
+        }
+    }
+    return true
+}

@@ -23,3 +23,27 @@ func helper(res [][]int, temp, nums []int, val, target, level int) [][]int {
 	}
 	return res
 }
+
+
+func combinationSum(candidates []int, target int) [][]int {
+    return dfs(nil, 0, target, 0, candidates, nil)
+}
+
+
+func dfs(res [][]int,start, target, tmp int, nums, list []int) [][]int {
+    if tmp > target {
+        return res
+    }
+    if tmp == target {
+        c := make([]int, len(list))
+        copy(c , list)
+        res = append(res, c)
+        return res
+    }
+    for i:= start; i < len(nums); i++ {
+        list = append(list, nums[i])
+        res = dfs(res, i, target, tmp + nums[i], nums, list)
+        list = list[:len(list)-1]
+    }
+    return res
+}
