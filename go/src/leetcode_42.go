@@ -26,3 +26,21 @@ func trap(height []int) int {
 	}
 	return res
 }
+
+
+func trap(height []int) int {
+    x , y := 0, len(height)-1
+    var lMax, rMax, max int
+    for x <= y {
+        lMax = int(math.Max(float64(lMax), float64(height[x])))
+        rMax = int(math.Max(float64(rMax), float64(height[y])))
+        if lMax > rMax {
+            max += rMax - height[y]
+            y--
+        } else {
+            max +=  lMax - height[x]
+            x++
+        }
+    }
+    return max
+}

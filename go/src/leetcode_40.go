@@ -26,3 +26,31 @@ func helper(res [][]int, temp []int, target int, val int, nums []int, level int)
 	}
 	return res
 }
+
+
+func combinationSum2(candidates []int, target int) [][]int {
+    sort.Ints(candidates)
+    return dfs(nil, candidates, nil, target, 0, 0)
+}
+
+
+func dfs(res [][]int, nums, list []int, target, tmp, start int) [][]int {{
+    if tmp > target {
+        return res
+    }
+    if tmp == target {
+        tList := make([]int, len(list))
+        copy(tList, list)
+        res = append(res, tList)
+        return res
+    }
+    dedup := make(map[int]bool)
+    for i := start; i < len(nums); i++ {
+        if dedup[nums[i]] {continue}
+        dedup[nums[i]] = true
+        list = append(list, nums[i])
+        res = dfs(res, nums, list, target, tmp + nums[i], i+1)
+        list = list[:len(list)-1]
+    }
+    return res
+}}
