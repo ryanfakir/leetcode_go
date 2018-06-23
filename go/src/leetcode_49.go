@@ -36,3 +36,18 @@ func groupAnagrams(strs []string) [][]string {
 	}
 	return res
 }
+
+func groupAnagrams(strs []string) [][]string {
+    dict := make(map[string][]string)
+    for _, v := range strs {
+        arr :=strings.Split(v, "")
+        sort.Strings(arr)
+        tmp := strings.Join(arr, "")
+        dict[tmp] = append(dict[tmp], v)
+    }
+    var res [][]string
+    for _, v := range dict {
+        res = append(res, v)
+    }
+    return res
+}

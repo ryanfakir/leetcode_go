@@ -32,3 +32,29 @@ func rotateRight(head *ListNode, k int) *ListNode {
 	sec.Next = oldHead
 	return newHead
 }
+
+func rotateRight(head *ListNode, k int) *ListNode {
+    var length int
+    dummy := &ListNode{0, head}
+    tmp := head
+    for tmp != nil {
+        tmp = tmp.Next
+        length++
+    }
+    if length == 0 {return nil}    
+    k = k % length
+    if k == 0 {return head}
+    s, f := dummy, dummy
+    for k > 0 {
+        f = f.Next
+        k--
+    }
+    for f.Next != nil {
+        f = f.Next
+        s = s.Next
+    }
+    f.Next = head
+    head = s.Next
+    s.Next = nil
+    return head
+}
