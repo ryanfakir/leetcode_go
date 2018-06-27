@@ -18,3 +18,23 @@ func helper(res [][]int, temp []int, k, n, level int) [][]int {
 	}
 	return res
 }
+
+func combine(n int, k int) [][]int {
+    return dfs(nil, nil, n, k, 1)
+}
+
+
+func dfs(res [][]int, tmp []int, n, k, level int) [][]int {
+    if len(tmp) == k {
+        el := make([]int, len(tmp))
+        copy(el, tmp)
+        res = append(res, el)
+        return res
+    }
+    for i:= level; i <= n; i++ {
+        tmp = append(tmp, i)
+        res = dfs(res, tmp, n, k, i+1)
+        tmp = tmp[:len(tmp)-1]
+    }
+    return res
+}
