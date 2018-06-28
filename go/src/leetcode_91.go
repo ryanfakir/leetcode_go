@@ -64,3 +64,34 @@ func valid(s string) bool {
     }
     return true
 }
+
+func numDecodings(s string) int {
+    dp := make([]int, len(s)+1)
+    if s[0] != '0' {
+        dp[1] = 1
+    }
+    for i := 2; i <= len(s); i++ {
+        for j :=i-2; j< i; j++ {
+            if isValid(s[j:i]) {
+                if j == 0 {
+                    dp[i] += 1
+                } else {
+                    dp[i] += dp[j]
+                }
+            }
+        }
+    }
+    return dp[len(s)]
+}
+
+func isValid(s string) bool {
+    if len(s) == 1 && s != "0" {return true}
+    if len(s) == 2 {
+        if s[0] == '0' {return false}
+        nums, _ := strconv.Atoi(s)
+        if nums <= 26 {
+            return true
+        }
+    }
+    return false
+}
