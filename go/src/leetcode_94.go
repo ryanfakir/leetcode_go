@@ -19,3 +19,21 @@ func inorderTraversal(root *TreeNode) []int {
     }
     return res
 }
+
+func inorderTraversal(root *TreeNode) []int {
+    if root == nil {return nil}
+    var q []*TreeNode
+    var res []int
+    for len(q) >0 || root != nil {
+        for root != nil {
+            q = append(q, root)
+            root = root.Left
+        }
+        pop := q[len(q)-1]
+        q = q[:len(q)-1]
+        res = append(res, pop.Val)
+        root = pop.Right
+    }
+    return res
+}
+
