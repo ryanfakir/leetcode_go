@@ -75,3 +75,49 @@ func levelOrder(root *TreeNode) [][]int {
 	}
 	return res
 }
+
+func levelOrder(root *TreeNode) [][]int {
+    if root == nil {return nil}
+    var res [][]int
+    q := []*TreeNode{root}
+    for len(q) > 0 {
+        size := len(q)
+        var tmp []int
+        for i := 0; i < size; i++ {
+            pop:= q[0]
+            q = q[1:]
+            tmp = append(tmp, pop.Val)
+            if pop.Left != nil {
+                q = append(q, pop.Left)
+            }
+            if pop.Right!= nil {
+                q = append(q, pop.Right)
+            }
+        }
+        res = append(res, tmp)
+    }
+    return res
+}
+
+func levelOrder(root *TreeNode) [][]int {
+    if root == nil {return nil}
+    var res [][]int
+    q := []*TreeNode{root}
+    for len(q) > 0 {
+        size := len(q)
+        var tmp []int
+        for i := 0; i < size; i++ {
+            pop:= q[0]
+            q = q[1:]
+            tmp = append(tmp, pop.Val)
+            if pop.Left != nil {
+                q = append(q, pop.Left)
+            }
+            if pop.Right!= nil {
+                q = append(q, pop.Right)
+            }
+        }
+        res = append(res, tmp)
+    }
+    return res
+}
