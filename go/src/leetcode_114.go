@@ -20,3 +20,27 @@ func flatten(root *TreeNode) {
 		left.Right = right
 	}
 }
+
+func flatten(root *TreeNode)  {
+    var q []*TreeNode
+    for root != nil || len(q) > 0 {
+        if root.Left != nil {
+            if root.Right != nil {
+                q = append(q, root.Right)
+            }
+            root.Right = root.Left
+            root.Left = nil
+        }
+        if root.Right == nil  {
+            if len(q) > 0 {
+                pop := q[len(q)-1]
+                q = q[:len(q)-1]
+                root.Right = pop
+            } else {
+                return
+            }
+        } else {
+            root = root.Right
+        }
+    }
+}
