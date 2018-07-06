@@ -80,3 +80,37 @@ func ladderLength(beginWord string, endWord string, wordList []string) int {
 	}
 	return 0
 }
+
+func ladderLength(beginWord string, endWord string, wordList []string) int {
+    dict := make(map[string]bool)
+    for _, v := range wordList {
+        dict[v] = true
+    }
+    var q []string = []string{beginWord}
+    var level = 1
+    gMap := make(map[string]bool)
+    for len(q) > 0 {
+        size := len(q)
+        levelMap := make(map[string]bool)
+        for i:= 0; i< size; i++ {
+            pop := q[0]
+            q = q[1:]
+            gMap[pop] = true
+            if pop ==endWord {return level}
+            for j :=0; j < len(pop); j++ {
+                tmp := pop
+                arr := []byte(tmp)
+                for k := 'a'; k <= 'z'; k++ {
+                    arr[j] = byte(k)
+                    if !gMap[string(arr)] && !levelMap[string(arr)] && dict[string(arr)] {
+                        fmt.Println(string(arr))
+                        levelMap[string(arr)] = true
+                        q = append(q, string(arr))
+                    }
+                }
+            }
+        }
+        level++
+    }
+    return 0
+}
