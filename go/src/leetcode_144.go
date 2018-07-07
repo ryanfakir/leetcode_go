@@ -27,3 +27,20 @@ func preorderTraversal(root *TreeNode) []int {
 	res = append(res, preorderTraversal(root.Right)...)
 	return res
 }
+
+
+func preorderTraversal(root *TreeNode) []int {
+    var q []*TreeNode
+    var res []int
+    for len(q) > 0 || root != nil {
+        for root != nil {
+            res = append(res, root.Val)
+            q = append(q, root)
+            root = root.Left
+        }
+        pop := q[len(q)-1]
+        q = q[:len(q)-1]
+        root = pop.Right
+    }
+    return res
+}
