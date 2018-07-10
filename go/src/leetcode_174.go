@@ -25,3 +25,24 @@ func calculateMinimumHP(dungeon [][]int) int {
 	}
 	return dp[0][0]
 }
+
+func calculateMinimumHP(dungeon [][]int) int {
+    m, n := len(dungeon), len(dungeon[0])
+    dp := make([][]int, m)
+    for i := range dp {
+        dp[i] = make([]int, n)
+    }
+    dp[m-1][n-1] = int(math.Max(1.0, float64(1-dungeon[m-1][n-1])))
+    for i := m-2; i >= 0 ; i-- {
+        dp[i][n-1] = int(math.Max(1.0, float64(dp[i+1][n-1] - dungeon[i][n-1])))
+    }
+    for i:= n-2; i>=0; i-- {
+        dp[m-1][i] = int(math.Max(1.0, float64(dp[m-1][i+1] - dungeon[m-1][i])))
+    }
+    for i := m-2; i >=0; i-- {
+        for j:= n-2; j>=0; j-- {
+            dp[i][j] = int(math.Max(1.0, math.Min(float64(dp[i+1][j]), float64(dp[i][j+1])) - float64(dungeon[i][j])))
+        }
+    }
+    return dp[0][0]
+}
