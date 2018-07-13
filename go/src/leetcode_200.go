@@ -95,3 +95,33 @@ func helper(grid [][]byte, x, y int) {
 		helper(grid, a, b)
 	}
 }
+
+func numIslands(grid [][]byte) int {
+    if len(grid) == 0 || len(grid[0]) == 0 {return 0}
+    m, n := len(grid), len(grid[0])
+    var res int
+    visited := make([][]bool, m)
+    for i := range visited {
+        visited[i] = make([]bool, n)
+    }
+    for i := 0; i < m; i++ {
+        for j := 0; j < n; j++ {
+            if grid[i][j] == '1' && !visited[i][j] {
+                res++
+                dfs(grid, i, j, visited) 
+            }
+        }
+    }
+    return res
+}
+
+
+func dfs(grid [][]byte, x, y int, visited [][]bool) {
+    if x < 0 || y < 0 || x >= len(grid) || y >= len(grid[0]) || grid[x][y] == '0' || visited[x][y] {return }
+    grid[x][y] = 0
+    visited[x][y] = true
+    dfs(grid, x-1 , y, visited)
+    dfs(grid, x+1 , y, visited)
+    dfs(grid, x, y-1, visited)
+    dfs(grid, x, y+1, visited)
+}
