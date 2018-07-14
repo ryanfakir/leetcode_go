@@ -60,3 +60,29 @@ func dfs(node int, visited, stack map[int]bool, graph map[int][]int) bool {
 	stack[node] = false
 	return false
 }
+
+
+func canFinish(numCourses int, prerequisites [][]int) bool {
+    pre := prerequisites
+    m := make(map[int][]int)
+    for _, v := range pre {
+        m[v[0]] = append(m[v[0]], v[1])
+    }
+    visited:= make(map[int]int)
+    for i:=0 ; i < numCourses; i++ {
+        if  !dfs(visited, i, m) {return false}
+    }
+    return true
+}
+
+
+func dfs(visited map[int]int, i int, grid map[int][]int) bool {
+    if visited[i] == -1 {return false}
+    if visited[i] == 1 {return true}
+    visited[i] = -1
+    for _, v := range grid[i] {
+        if !dfs(visited, v, grid) {return false}
+    }
+    visited[i]= 1
+    return true
+}
