@@ -75,3 +75,35 @@ func calculate(s string) int {
 	}
 	return res
 }
+
+func calculate(s string) int {
+    var stack []int
+    var op = '+'
+    var num int
+    for i , v := range s {
+        if v >= '0' && v <= '9' {
+            num = num * 10 + int(v - '0')
+        if v == '+' || v == '-' || v == '*' || v == '/' || i == len(s)-1 {
+            fmt.Println(num)
+            if op == '+' {stack = append(stack, num)}
+            if op == '-' {stack = append(stack, -num)}
+            if op == '*' {
+                 pop := stack[len(stack)-1]
+                stack = stack[:len(stack)-1]
+                stack = append(stack, pop * num)
+            }
+            if op == '/' {
+                 pop := stack[len(stack)-1]
+                stack = stack[:len(stack)-1]
+                stack = append(stack, pop/ num)
+            }
+            op = v
+            num = 0
+        }
+    }
+    var res int
+    for _ ,v  := range stack {
+        res  += v
+    }
+    return res
+}
