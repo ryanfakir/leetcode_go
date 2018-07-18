@@ -57,3 +57,21 @@ func kthSmallest(root *TreeNode, k int) int {
 	}
 	return -1
 }
+
+func kthSmallest(root *TreeNode, k int) int {
+    var q []*TreeNode
+    var cnt int
+    for len(q) > 0 || root != nil {
+        for root != nil {
+            q = append(q, root)
+            root = root.Left
+        }
+        pop := q[len(q)-1]
+        q  = q[:len(q)-1]
+        cnt++
+        if cnt == k {return pop.Val}
+        root = pop.Right
+    }
+    return 0
+    
+}
