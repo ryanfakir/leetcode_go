@@ -57,3 +57,43 @@ func findMinHeightTrees(n int, edges [][]int) []int {
 	}
 	return res
 }
+
+func findMinHeightTrees(n int, edges [][]int) []int {
+    if n == 1 {return []int{0}}
+    dict := make(map[int][]int)
+    for _, v := range edges {
+        dict[v[0]] = append(dict[v[0]], v[1])
+        dict[v[1]] = append(dict[v[1]], v[0])
+    }
+    var q []int
+    for k, v := range dict {
+        if len(v) == 1 {
+            q = append(q, k)
+        }
+    }
+    for len(q) > 0 {
+        size := len(q)
+        if n <= 2 {break}
+        for i:= 0; i < size; i++ {
+            pop := q[0]
+            q = q[1:]
+            n--
+            p := dict[pop][0]
+            for i, v := range dict[p] {
+                if v == pop {
+                    dict[p] = append(dict[p][:i], dict[p][i+1:]...)
+                    if len(dict[p]) == 1 {
+                        q =append(q, p)
+                    }
+                   
+                }
+            }
+            delete(dict, pop)
+        }
+    }
+    var res []int
+    for _, v := range q {
+        res = append(res, v)
+    }
+    return res
+}
