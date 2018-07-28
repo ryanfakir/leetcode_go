@@ -49,3 +49,27 @@ func (q *IntHeap) Pop() interface{} {
 func (q IntHeap) Len() int { return len(q)}
 func (q IntHeap) Less(i, j int) bool { return q[i].value < q[j].value}
 func (q IntHeap) Swap(i, j int) {q[i], q[j] = q[j], q[i]}
+
+func topKFrequent(nums []int, k int) []int {
+    dict := make(map[int]int)
+    for _ , v := range nums {
+        dict[v]++
+    }
+    var pq PQ
+    heap.Init(&pq)
+    for key, v := range dict {
+        if len(pq) >= k {
+            pop := heap.Pop(&pq).(Entry)
+            if pop.value > v {
+                 heap.Push(&pq, pop)
+                continue
+            }
+        }
+        heap.Push(&pq, Entry{key, v})
+    }
+    var res []int
+    for pq.Len() > 0{
+        res = append(res, heap.Pop(&pq).(Entry).key)
+    }
+    return res
+}
