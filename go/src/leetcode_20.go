@@ -34,3 +34,22 @@ func isValid(s string) bool {
 	}
 	return len(stack) == 0
 }
+
+func isValid(s string) bool {
+    var stack []rune
+    for _ , v := range s {
+        if v == '(' || v == '[' || v == '{' {
+            if v == '(' {stack = append(stack, ')')}
+            if v == '{' {stack = append(stack, '}')}
+            if v == '[' {stack = append(stack, ']')}
+            continue
+        }
+        if v == ')' || v == ']' || v == '}' {
+            if len(stack) == 0 {return false}
+            pop := stack[len(stack)-1]
+            stack = stack[:len(stack)-1]
+            if pop != v {return false}
+        }
+    }
+    return len(stack) == 0
+}

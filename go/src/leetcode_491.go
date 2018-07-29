@@ -22,3 +22,30 @@ func helper(nums []int, start int, arr []int, res [][]int) [][]int {
 	}
 	return res
 }
+
+var res [][]int
+func findSubsequences(nums []int) [][]int {
+    res = nil
+    dfs(nums, nil, 0)
+    return res
+}
+
+func dfs(nums, tmp []int, level int) {
+    if len(tmp) >= 2 {
+        el := make([]int, len(tmp))
+        copy(el, tmp)
+        res = append(res, el)
+    }
+    if level == len(nums) {return}
+    levelDict := make(map[int]bool)
+    for i := level; i < len(nums); i++ {
+        if  !levelDict[nums[i]] && (len(tmp) == 0 || tmp[len(tmp)-1] <= nums[i] ) {
+            levelDict[nums[i]] = true
+            tmp = append(tmp, nums[i])
+            dfs(nums, tmp, i+1)
+            tmp = tmp[:len(tmp)-1]
+        }
+    }
+}
+
+
