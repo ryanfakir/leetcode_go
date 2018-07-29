@@ -64,3 +64,67 @@ func (this *LRUCache) Put(key int, value int) {
 	}
 	this.addHead(this.m[key])
 }
+
+
+type LRUCache struct {
+    dict map[int]*Node
+    Head *Node 
+    Tail *Node
+    Size int
+    Level int
+}
+
+type Node struct {
+    Prev *Node
+    Next *Node
+    Val int
+    Key int
+}
+
+
+func Constructor(capacity int) LRUCache {
+    head, tail := &Node{Val: 0}, &Node{Val: 0}
+    head.Next = tail
+    tail.Prev = head
+    return LRUCache{dict: make(map[int]*Node), Head: head, Tail: tail, Size: capacity}
+}
+
+func deleteNode(node *Node) {
+    node.Prev.Next = node.Next
+    node.Next.Prev = node.Prev
+    node.Prev = nil
+    node.Next = nil
+}
+
+func (this *LRUCache) insertHead(node *Node) {
+    node.Prev = this.Head
+    node.Next = this.Head.Next
+    this.Head.Next.Prev = node
+    this.Head.Next = node
+}
+
+func (this *LRUCache) Get(key int) int {
+    if this.dict[key] != nil {
+        deleteNode(this.dict[key])
+        this.insertHead(this.dict[key])
+        return this.dict[key].Val
+    }
+    return -1
+}
+
+
+func (this *LRUCache) Put(key int, value int)  {
+    if this.dict[key] != nil {
+        this.dict[key].Val = value
+        deleteNode(this.dict[key])
+        this.insertHead(this.dict[key])
+    } else {
+        this.Level++
+        this.dict[key] = &Node{Key: key, Val: value}
+        this.insertHead(this.dict[key])
+        if this.Level > this.Size {
+            delete(this.dict, this.Tail.Prev.Key)
+            deleteNode(this.Tail.Prev)
+        }
+    }
+}

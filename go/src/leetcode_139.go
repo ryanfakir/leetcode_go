@@ -46,3 +46,20 @@ func contains(wordDict []string, target string) bool {
 	}
 	return false
 }
+
+func wordBreak(s string, wordDict []string) bool {
+    if len(s) == 0 {return true}
+    dict := make(map[string]bool)
+    for _ , word:= range wordDict {
+        dict[word] = true
+    }
+    dp := make([]bool, len(s))
+    for i:= 0; i < len(dp); i++ {
+        for j := -1; j < i; j++ {
+            if (j == -1 || dp[j]) && dict[s[j + 1: i + 1]] {
+                dp[i] = true
+            }
+        }
+    }
+    return dp[len(s)-1]
+}
