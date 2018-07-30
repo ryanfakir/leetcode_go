@@ -25,26 +25,6 @@ func findWords(board [][]byte, words []string) []string {
     return res
 }
 
-
-func dfs(visited [][]bool, board [][]byte, x, y int, s string, t *Trie) {
-    if x  < 0 || y < 0 || x >= len(board) || y >= len(board[0]) || visited[x][y] {
-        return
-    }
-    
-    s += string(board[x][y])
-    if !t.StartsWith(s) { return }
-    if t.Search(s) {
-        dict[s] = true
-    }
-    visited[x][y] = true
-    dfs(visited, board, x-1, y, s, t)
-    dfs(visited, board, x+1, y, s, t)
-    dfs(visited, board, x, y-1, s, t)
-    dfs(visited, board, x, y+ 1, s, t)
-    visited[x][y] = false
-}
-
-
 type Trie struct {
     path []*Trie
     end bool
@@ -89,6 +69,55 @@ func (this *Trie) StartsWith(prefix string) bool {
     return this.StartsWith(prefix[1:])
 }
 
+
+
+type Trie struct {
+    Path []*Trie
+    end bool
+}
+
+
+/** Initialize your data structure here. */
+func Constructor() Trie {
+    return Trie{}
+}
+
+
+/** Inserts a word into the trie. */
+func (this *Trie) Insert(word string)  {
+    for i:= 0; i < len(word); i++ {
+        if this.Path == nil {
+            this.Path = make([]*Trie, 26)
+        }
+        if this.Path[word[i] - 'a'] == nil {
+            this.Path[word[i] - 'a'] = new(Trie)
+        }
+        this = this.Path[word[i]- 'a']
+    }
+    this.end = true
+}
+
+
+/** Returns if the word is in the trie. */
+func (this *Trie) Search(word string) bool {
+    for i:= 0; i < len(word); i++ {
+        if this.Path == nil {return false}
+        if this.Path[word[i] - 'a'] == nil {return false}
+        this = this.Path[word[i]- 'a']
+    }
+    return this.end
+}
+
+
+/** Returns if there is any word in the trie that starts with the given prefix. */
+func (this *Trie) StartsWith(prefix string) bool {
+    for i:= 0; i< len(prefix); i++ {
+        if this.Path == nil {return false}
+        if this.Path[prefix[i] - 'a'] == nil {return false}
+        this = this.Path[prefix[i]- 'a']
+    }
+    return true
+}
                                                       
 
 

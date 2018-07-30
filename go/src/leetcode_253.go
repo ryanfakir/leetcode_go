@@ -31,3 +31,25 @@ type Col []Interval
 func (c Col) Len() int      { return len(c) }
 func (c Col) Swap(i, j int) { c[i], c[j] = c[j], c[i] }
 func (c Col) Less(i, j int) { return c[i].Start < c[j].Start && c[i].End < c[j].End }
+
+
+
+func minMeetingRooms(intervals []Interval) int {
+    arr := intervals
+    var start, end []int
+    for _ , v := range arr {
+        start = append(start, v.Start)
+        end = append(end, v.End)
+    }
+    sort.Ints(start)
+    sort.Ints(end)
+    var pos, res int
+    for i:= 0; i< len(arr); i++ {
+        if start[i] < end[pos] {
+            res++
+        } else {
+            pos++
+        }
+    }
+    return res
+}
