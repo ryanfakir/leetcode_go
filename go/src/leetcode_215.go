@@ -102,3 +102,36 @@ func (e *ElementArr) Pop() interface{} {
     *e = temp[:len(temp)-1]
     return res
 }
+
+
+
+func findKthLargest(nums []int, k int) int {
+    pq := &PQ{}
+    heap.Init(pq)
+    for _ , v := range nums {
+        heap.Push(pq, v)
+        if pq.Len() > k {
+            heap.Pop(pq)
+        }
+    }
+    return heap.Pop(pq).(int)
+}
+
+
+type PQ []int
+
+func (p *PQ) Push(x interface{}) {
+    *p = append(*p, x.(int))
+}
+
+func (p *PQ) Pop() interface{} {
+    org := *p
+    pop := org[len(org)-1]
+    *p = org[:len(org)-1]
+    
+    return pop
+}
+
+func (p PQ) Swap(i, j int) {p[i], p[j] = p[j], p[i]}
+func (p PQ) Len() int {return len(p)}
+func (p PQ) Less(i, j int) bool {return p[i] < p[j]}
