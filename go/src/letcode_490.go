@@ -9,8 +9,10 @@ func hasPath(maze [][]int, start []int, destination []int) bool {
             dp[i][j] = 1 << 31-1
         }
     }
-    dp[start[0]][start[1]] = 0
-    dfs(maze, dp, start, destination)
+    visited := make(map[int]bool)
+    
+    dfs(maze, dp, start, destination, visited, 0)
+    fmt.Println(dp)
     if dp[destination[0]][destination[1]] == 1 << 31 -1 {
         return false
     }
@@ -19,10 +21,12 @@ func hasPath(maze [][]int, start []int, destination []int) bool {
 }
 
 
-func dfs(maze, dp [][]int, start, end []int)  {
+func dfs(maze, dp [][]int, start, end []int, visited map[int]bool, cnt int)  {
+    if cnt < dp[start[0]][start[1]] {
+        dp[start[0]][start[1]] = cnt
+    }
     dirs := [][]int{{0,1}, {0, -1}, {1, 0}, {-1, 0}}
     for _ , dir := range dirs {
-        var cnt int
         x, y := start[0], start[1] 
         for x >=0 && y >=0 && x < len(maze) && y < len(maze[0]) && maze[x][y] != 1 {
             x +=dir[0]
@@ -32,10 +36,12 @@ func dfs(maze, dp [][]int, start, end []int)  {
         x -= dir[0]
         y -= dir[1]
         cnt--
-        if dp[start[0]][start[1]] + cnt < dp[x][y] {
-            dp[x][y] = dp[start[0]][start[1]] + cnt
-            dfs(maze, dp, []int{x, y}, end)
+        if !visited[x*len(maze) + y] {
+            visited[x*len(maze) + y] = true
+            dfs(maze, dp, []int{x, y}, end, visited, cnt)
         }
     }
 }
+
+
 
