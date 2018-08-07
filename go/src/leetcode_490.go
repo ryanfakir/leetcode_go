@@ -68,8 +68,8 @@ func hasPath(maze [][]int, start []int, destination []int) bool {
             i -= dir[0]
             j -= dir[1]
             cnt--
-            if cnt + dp[x][y] < dp[i][j] {
-                dp[i][j] = cnt + dp[x][y]
+            if cnt < dp[i][j] {
+                dp[i][j] = cnt 
                 q = append(q, []int{i, j})
             }
         }
