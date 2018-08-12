@@ -36,3 +36,32 @@ func minWindow(s string, t string) string {
 	}
 	return res
 }
+
+func minWindow(s string, t string) string {
+    dict := make(map[rune]int)
+    for _ , v := range t {
+        dict[v]++
+    }
+    res := s + "s"
+    var cnt, left int
+    for i := 0; i < len(s); i++ {
+        dict[rune(s[i])]--
+        if dict[rune(s[i])] >= 0 {
+            cnt++
+        }
+        for cnt == len(t) {
+            if len(s[left:i+1]) < len(res) {
+                res = s[left: i+1]
+            }
+            if _, ok := dict[rune(s[left])]; ok {
+                dict[rune(s[left])]++
+                if dict[rune(s[left])] > 0 {
+                    cnt--
+                }
+            }
+            left++
+        }
+    }
+    if len(res) > len(s) {return ""}
+    return res
+}

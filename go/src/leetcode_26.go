@@ -15,3 +15,17 @@ func removeDuplicates(nums []int) int {
     }
     return len(b)
 }
+
+func removeDuplicates(nums []int) int {
+    if len(nums) == 0 {return 0}
+    prev := nums[0]
+    var res int
+    for i:= 1; i < len(nums); i++ {
+        if nums[i] != prev {
+            res++
+            nums[res] = nums[i]
+            prev = nums[res]
+        }
+    }
+    return res + 1
+}
