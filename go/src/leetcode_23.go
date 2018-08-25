@@ -84,3 +84,30 @@ func merge(l1, l2 *ListNode) *ListNode {
     return tmp.Next
     
 }
+
+func mergeKLists(lists []*ListNode) *ListNode {
+    if len(lists) == 0 {return nil}
+    left, right := 0, len(lists)-1
+    if left == right {
+        return lists[0]
+    } else {
+        mid := (left + right)/2
+        la := mergeKLists(lists[:mid+1])
+        ra := mergeKLists(lists[mid+1:])
+        return merge(la, ra)
+    }
+    
+    
+}
+
+func merge(l1, l2 *ListNode) *ListNode {
+    if l1 == nil {return l2}
+    if l2 == nil {return l1}
+    if l1.Val < l2.Val {
+        l1.Next = merge(l1.Next, l2)
+        return l1
+    } else {
+        l2.Next = merge(l1, l2.Next)
+        return l2
+    }
+}
