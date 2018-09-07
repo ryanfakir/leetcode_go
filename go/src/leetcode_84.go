@@ -41,7 +41,7 @@ func largestRectangleArea(heights []int) int {
     var s []int
     var res, i int
     for i < len(h) {
-        if len(s) == 0 || s[len(s)-1] <= h[i] {
+        if len(s) == 0 || h[s[len(s)-1]] <= h[i] {
             s = append(s, i)
             i++
         } else {
@@ -51,9 +51,8 @@ func largestRectangleArea(heights []int) int {
             if len(s) == 0 {
                 l = i
             } else {
-                l = i - pop 
+                l = i - s[len(s)-1] -1
             }
-            l = i- pop
             res = int(math.Max(float64(res), float64(l * h[pop])))
         }
     }
