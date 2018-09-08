@@ -46,3 +46,25 @@ func lengthOfLIS(nums []int) int {
     }
     return len(tmp)
 }
+
+func lengthOfLIS(nums []int) int {
+    var tmp []int
+    for _, v := range nums {
+        if len(tmp) == 0 || v > tmp[len(tmp)-1] {
+            tmp = append(tmp, v)
+        } else {
+            l, r := 0, len(tmp)-1
+            for l < r {
+                mid := (l + r) /2
+                if tmp[mid] >= v {
+                    r = mid
+                } else {
+                    l = mid +1
+                }
+            }
+            tmp[l] = v
+        }
+    }
+    return len(tmp)
+    
+}
